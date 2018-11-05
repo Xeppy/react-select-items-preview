@@ -1,94 +1,71 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
+import { sendCardToPreview, removeCardFromPreview } from './store/actions';
+import Cards from './components/Cards';
+import AssetSummary from './components/AssetSummary';
+import PreviewBox from './components/PreviewBox';
 
-export default () => (
-  <div className="wrapper">
-    <div className="asset-summary">
-      <div className="container">
-        <div className="row">
-          <div className="col-6 asset-summary-left">
-            <span>4 assets</span>
+export class App extends Component {
+
+  handleAssetClick = (id) => {
+    this.props.dispatch(sendCardToPreview(id))
+  }
+
+  handleRemoveAsset = (id) => {
+    this.props.dispatch(removeCardFromPreview(id))
+  }
+
+  render() {
+    return (
+      <div className="wrapper">
+        <div className="asset-summary">
+          <div className="container">
+            <div className="row">
+              <div className="col-6 asset-summary-left">
+                <span>{this.props.previewData.length} assets</span>
+              </div>
+              <div className="col-6 asset-summary-right">
+                <AssetSummary 
+                  data={this.props.previewData}
+                />
+              </div>
+            </div>
           </div>
-          <div className="col-6 asset-summary-right">
-            2x<span className="info">Articles</span>
-            1x<span className="info">Documents</span>
-            1x<span className="info">Video</span>
+        </div>
+        <div className="container asset-builder">
+          <div className="row">
+            <div className="col-4">
+              <ul className="asset-picker">
+                <Cards 
+                  data={this.props.data}
+                  handleAssetClick={this.handleAssetClick}
+                />
+              </ul>
+            </div>
+            <div className="col-8">
+              <h2>Learning Assets Preview</h2>
+              <PreviewBox>
+                <Cards 
+                  isPreview
+                  data={this.props.previewData}
+                  handleAssetClick={ () => {return null} }
+                  handleRemoveAsset={this.handleRemoveAsset}
+                />
+              </PreviewBox>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div className="container asset-builder">
-      <div className="row">
-        <div className="col-4">
-          <ul className="asset-picker">
-            <li className="asset type-video">
-              <h2>Dummy asset name</h2>
-              <p>
-                <span className="info">4 minutes</span>
-                <span className="info">Video</span>
-              </p>
-            </li>
-            <li className="asset type-video">
-              <h2>Dummy asset name</h2>
-              <p>
-                <span className="info">4 minutes</span>
-                <span className="info">Video</span>
-              </p>
-            </li>
-            <li className="asset type-video">
-              <h2>Dummy asset name</h2>
-              <p>
-                <span className="info">4 minutes</span>
-                <span className="info">Video</span>
-              </p>
-            </li>
-            <li className="asset type-video">
-              <h2>Dummy asset name</h2>
-              <p>
-                <span className="info">4 minutes</span>
-                <span className="info">Video</span>
-              </p>
-            </li>
-          </ul>
-        </div>
-        <div className="col-8">
-          <h2>Learning Assets Preview</h2>
-          <ul className="asset-preview">
-            <li className="asset type-article">
-              <h2>Dummy asset name</h2>
-              <p>
-                <span className="info">4 minutes</span>
-                <span className="info">Articles</span>
-              </p>
-              <button className="remove-asset">x</button>
-            </li>
-            <li className="asset type-article">
-              <h2>Dummy asset name</h2>
-              <p>
-                <span className="info">4 minutes</span>
-                <span className="info">Articles</span>
-              </p>
-              <button className="remove-asset">x</button>
-            </li>
-            <li className="asset type-document">
-              <h2>Dummy asset name</h2>
-              <p>
-                <span className="info">4 minutes</span>
-                <span className="info ">Document</span>
-              </p>
-              <button className="remove-asset">x</button>
-            </li>
-            <li className="asset type-video">
-              <h2>Dummy asset name</h2>
-              <p>
-                <span className="info">4 minutes</span>
-                <span className="info">Video</span>
-              </p>
-              <button className="remove-asset">x</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+    )
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    data: state.data,
+    previewData: state.previewData,
+  }
+}
+
+export default connect(mapStateToProps)(App);
