@@ -1,14 +1,9 @@
-# Filtered Technical Challenge
+# React Select Assets
 
-Thank you for taking the time to attempt this challenge.
+### Small demo app which allows you to select assets from a panel and add them to a basket/preview.
 
-These tests are used to evaluate candidates of all skill levels, so please complete them as you would in a working
-environment to a level you feel is an accurate representation of your skill set.
-
-If you are applying for a frontend role, please complete `README-FRONTEND.md`.
-
-Each part should take 2-3 hours depending on experience.
-
-If you have any questions or would like to clarify any details, please email at@filtered.com.
-
-Good luck!
+## How to Install and run
+1. `git clone https://github.com/Xeppy/react-select-items-preview.git`
+2. `cd react-select-items-preview`
+3. `npm i`
+4. `npm start`
